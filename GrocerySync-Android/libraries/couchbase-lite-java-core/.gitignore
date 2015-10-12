@@ -1,0 +1,16 @@
+/build/
+*.iml
+.DS_Store
+/src/instrumentTest/assets/local-test.properties
+*.class
+local.properties
+/.gradle/
+\#*
+*~
+.#*
+\#*\#
+*.class
+.idea
+.gradle
+
+
