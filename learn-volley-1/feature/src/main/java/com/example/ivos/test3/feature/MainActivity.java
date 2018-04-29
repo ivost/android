@@ -23,15 +23,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mLog = new Logger("", getApplicationContext());
-        mProvider = new Provider(getApplicationContext());
+        mProvider = Provider.getInstance(getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mProvider.getRepos();
-                // log.toast(connected());
 //                Snackbar.make(view,  connected() + ", items: " + items.size(), Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
             }

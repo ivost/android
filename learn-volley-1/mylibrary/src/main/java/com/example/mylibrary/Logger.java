@@ -78,7 +78,7 @@ public class Logger {
         if (text == null || mContext == null) {
             return;
         }
-        final Toast toast = Toast.makeText(mContext, text, Toast.LENGTH_LONG);
+        final Toast toast = Toast.makeText(mContext, text, Toast.LENGTH_SHORT);
         toast.show();
 
 //        Handler handler = new Handler();
