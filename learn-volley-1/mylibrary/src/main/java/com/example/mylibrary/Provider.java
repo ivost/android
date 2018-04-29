@@ -3,22 +3,21 @@ package com.example.mylibrary;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.widget.Toast;
 
+import com.android.volley.Cache;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
 
 public class Provider {
 
     private static final String URL = "https://api.github.com";
     private static final String URL_REP = URL + "/repositories";
-
 
     private final Context mContext;
     private final Logger mLog;
@@ -27,8 +26,22 @@ public class Provider {
     public Provider(Context context) {
         mContext = context;;
         mLog = new Logger("<<IVO>>", context);
-        mQueue = Volley.newRequestQueue(mContext);
         mLog.toast(connected());
+
+        //mQueue = Volley.newRequestQueue(mContext);
+
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(context.getCacheDir(), 1024 * 1024); // 1MB cap
+
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        BasicNetwork network = new BasicNetwork(new HurlStack());
+
+        // Instantiate the RequestQueue with the cache and network.
+        mQueue = new RequestQueue(cache, network);
+
+        // Start the queue
+        mQueue.start();
+
     }
 
     public void getRepos() {
@@ -40,7 +53,6 @@ public class Provider {
                     public void onResponse(String response) {
                         long elapsed = (int)((System.nanoTime() - start)/1000000);
                         mLog.debug("got result in " + elapsed + " ms" + ", size: " + response.length());
-                        //mLog.toast(response);
                     }
                 },
                 new Response.ErrorListener() {

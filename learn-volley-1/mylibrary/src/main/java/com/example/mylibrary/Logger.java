@@ -74,6 +74,7 @@ public class Logger {
      * @param text
      */
     public void toast(String text) {
+        debug(text);
         if (text == null || mContext == null) {
             return;
         }
