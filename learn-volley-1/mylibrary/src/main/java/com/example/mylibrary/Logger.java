@@ -13,9 +13,9 @@ import android.widget.Toast;
 
 public class Logger {
 
-    private static final String TAG = "<<<IVO>>>";
+    private static final String TAG = "";
     private String mPrefix = TAG;
-    private boolean mDebug = true;
+    private static final boolean mDebug = false;
     private BufferedWriter mWriter;
     private Context mContext;
     private File logFile = new File(Environment.getExternalStorageDirectory().getPath() + "/log");
@@ -31,6 +31,7 @@ public class Logger {
 
     private boolean init() {
         try {
+            if (!mDebug) return true;
             if (!logFile.exists()) {
                 logFile.createNewFile();
             }
@@ -64,7 +65,7 @@ public class Logger {
             }
         } catch (Exception ex) {
             // ignore exception
-            Log.e(TAG, ex.getMessage());
+            //Log.e(TAG, ex.getMessage());
         }
     }
 
@@ -89,7 +90,7 @@ public class Logger {
     }
 
     public void setDebug(boolean is_debug) {
-        mDebug = is_debug;
+        //mDebug = is_debug;
     }
 
     public boolean isDebug() {

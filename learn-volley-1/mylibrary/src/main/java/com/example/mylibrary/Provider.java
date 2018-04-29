@@ -26,18 +26,21 @@ public class Provider {
 
     public Provider(Context context) {
         mContext = context;;
-        mLog = new Logger("", context);
+        mLog = new Logger("<<IVO>>", context);
         mQueue = Volley.newRequestQueue(mContext);
         mLog.toast(connected());
     }
 
     public void getRepos() {
-        mLog.toast("getRepos " + URL_REP);
+        mLog.debug("getRepos " + URL_REP);
+        final long start = System.nanoTime();
         StringRequest request = new StringRequest(Request.Method.GET, URL_REP,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        mLog.toast(response);
+                        long elapsed = (int)((System.nanoTime() - start)/1000000);
+                        mLog.debug("got result in " + elapsed + " ms" + ", size: " + response.length());
+                        //mLog.toast(response);
                     }
                 },
                 new Response.ErrorListener() {
